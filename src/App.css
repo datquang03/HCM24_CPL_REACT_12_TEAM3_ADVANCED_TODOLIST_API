@@ -32,23 +32,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 5%; /* Adjust to avoid overlap with sidebar */
+  margin: 60px;
   overflow: hidden; /* Prevent scrolling on the entire outlet */
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  left: 5%;
-  width: 95%;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  z-index: 1;
-  color: white;
-  font-size: 24px;
 }
 
 .content {
@@ -56,7 +41,6 @@ body {
   border-radius: 30px;
   background-color: #1e1e1e;
   padding: 20px;
-  margin-top: 80px;
   height: calc(100vh - 20px);
   overflow-y: auto;
 }

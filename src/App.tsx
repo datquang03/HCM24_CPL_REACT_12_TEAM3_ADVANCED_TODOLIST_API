@@ -14,13 +14,13 @@ function App() {
     <div className="no-scrollbar">
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/notification" element={<NotificationPage />} />
             <Route path="/userprofile" element={<UserProfilePage />} />
             <Route path="/detail/:id" element={<BlogDetailPage />} />
-            <Route path="/login" element={<LoginPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
