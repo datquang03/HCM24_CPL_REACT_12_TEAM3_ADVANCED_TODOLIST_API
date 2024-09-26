@@ -1,7 +1,7 @@
 const UserProfilePage = () => {
   return (
     <div>
-      <div style={{ height: "250px" }}></div>
+      <div>User Profile</div>
     </div>
   );
 };

@@ -1,174 +1,73 @@
 import { useCustomNavigate } from "../hooks/useCustomNavigate";
 
+import MainLogo from "../assets/MainLogo.svg";
+import HomeIcon from "../assets/HomeIcon.svg";
+import SearchIcon from "../assets/SearchIcon.svg";
+import NotificationIcon from "../assets/NotificationIcon.svg";
+import ProfileIcon from "../assets/ProfileIcon.svg";
+import PinToHome from "../assets/PinToHomeIcon.svg";
+import MoreIcon from "../assets/MoreIcon.svg";
+
+import { MenuButton } from "./MenuButton";
+
 const SideBarMenu = () => {
   const navigateTo = useCustomNavigate();
 
-  // Hàm điều hướng chung
   const handleNavigation = (path: string) => {
     navigateTo(path);
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        minHeight: "100vh",
-        width: "100%",
-        flexDirection: "column",
-      }}
-    >
-      {/* logo container */}
-      <div
-        className="logo-container"
-        style={{
-          height: "40px",
-          marginTop: "15px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="40px" // Đặt kích thước
-          fill="currentColor"
-          viewBox="0 0 16 16"
-          onClick={() => handleNavigation("/homepage")}
-          style={{ cursor: "pointer" }}
-        >
-          <path d="M6.321 6.016c-.27-.18-1.166-.802-1.166-.802.756-1.081 1.753-1.502 3.132-1.502.975 0 1.803.327 2.394.948s.928 1.509 1.005 2.644q.492.207.905.484c1.109.745 1.719 1.86 1.719 3.137 0 2.716-2.226 5.075-6.256 5.075C4.594 16 1 13.987 1 7.994 1 2.034 4.482 0 8.044 0 9.69 0 13.55.243 15 5.036l-1.36.353C12.516 1.974 10.163 1.43 8.006 1.43c-3.565 0-5.582 2.171-5.582 6.79 0 4.143 2.254 6.343 5.63 6.343 2.777 0 4.847-1.443 4.847-3.556 0-1.438-1.208-2.127-1.27-2.127-.236 1.234-.868 3.31-3.644 3.31-1.618 0-3.013-1.118-3.013-2.582 0-2.09 1.984-2.847 3.55-2.847.586 0 1.294.04 1.663.114 0-.637-.54-1.728-1.9-1.728-1.25 0-1.566.405-1.967.868ZM8.716 8.19c-2.04 0-2.304.87-2.304 1.416 0 .878 1.043 1.168 1.6 1.168 1.02 0 2.067-.282 2.232-2.423a6.2 6.2 0 0 0-1.528-.161" />
-        </svg>
+    <div className="flex h-[100vh] flex-col justify-between">
+      <div className="p-2">
+        <div className="h-10 mt-4 flex justify-center">
+          <img className="h-10 w-10 " src={MainLogo} alt="Home" />
+        </div>
       </div>
-
-      {/* menu task container */}
-      <div
-        className="side-bar-menu"
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginTop: "170px",
-          gap: "20px",
-        }}
-      >
-        {/* Home Icon */}
-        <svg
-          aria-label="Home"
-          role="img"
-          viewBox="0 0 26 26"
-          style={{
-            height: "30px",
-            width: "50px",
-            marginBottom: "30px",
-            cursor: "pointer",
-          }}
+      <div className="p-2 flex flex-col gap-4 items-center">
+        <MenuButton
+          svg={HomeIcon}
+          title="Home"
+          height={30}
+          width={30}
           onClick={() => handleNavigation("/homepage")}
-        >
-          <title>Home</title>
-          <path
-            d="M2.25 12.8855V20.7497C2.25 21.8543 3.14543 22.7497 4.25 22.7497H9.25C9.52614 22.7497 9.75 22.5258 9.75 22.2497V17.6822V16.4997C9.75 14.7048 11.2051 13.2497 13 13.2497C14.7949 13.2497 16.25 14.7048 16.25 16.4997V17.6822V22.2497C16.25 22.5258 16.4739 22.7497 16.75 22.7497H21.75C22.8546 22.7497 23.75 21.8543 23.75 20.7497V12.8855C23.75 11.3765 23.0685 9.94814 21.8954 8.99882L16.1454 4.34539C14.3112 2.86094 11.6888 2.86094 9.85455 4.34539L4.10455 8.99882C2.93153 9.94814 2.25 11.3765 2.25 12.8855Z"
-            fill="none"
-            stroke="gray"
-            stroke-linecap="round"
-            stroke-width="2.5"
-          ></path>
-        </svg>
-
-        {/* Search Icon */}
-        <svg
-          aria-label="Search"
-          role="img"
-          viewBox="0 0 26 26"
-          style={{
-            height: "30px",
-            width: "50px",
-            marginBottom: "30px",
-            cursor: "pointer",
-          }}
+        />
+        <MenuButton
+          svg={SearchIcon}
+          title="Search"
+          height={30}
+          width={30}
           onClick={() => handleNavigation("/search")}
-        >
-          <title>Search</title>
-          <path
-            clip-rule="evenodd"
-            d="M3.5 11.5C3.5 7.08172 7.08172 3.5 11.5 3.5C15.9183 3.5 19.5 7.08172 19.5 11.5C19.5 15.9183 15.9183 19.5 11.5 19.5C7.08172 19.5 3.5 15.9183 3.5 11.5ZM11.5 1C5.70101 1 1 5.70101 1 11.5C1 17.299 5.70101 22 11.5 22C13.949 22 16.2023 21.1615 17.9883 19.756L22.3661 24.1339C22.8543 24.622 23.6457 24.622 24.1339 24.1339C24.622 23.6457 24.622 22.8543 24.1339 22.3661L19.756 17.9883C21.1615 16.2023 22 13.949 22 11.5C22 5.70101 17.299 1 11.5 1Z"
-            fill="gray"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        {/* Notification Icon */}
-        <svg
-          aria-label="Notifications"
-          role="img"
-          viewBox="0 0 32 32"
-          style={{
-            height: "30px",
-            width: "50px",
-            marginBottom: "30px",
-            cursor: "pointer",
-          }}
+        />
+        <MenuButton
+          svg={NotificationIcon}
+          title="Notification"
+          height={30}
+          width={30}
           onClick={() => handleNavigation("/notification")}
-        >
-          <title>Notifications</title>
-          <path
-            d="M5.5 12.8568C5.5 17.224 9.22178 21.5299 15.0332 25.2032C15.3554 25.397 15.7401 25.5909 16 25.5909C16.2703 25.5909 16.655 25.397 16.9668 25.2032C22.7782 21.5299 26.5 17.224 26.5 12.8568C26.5 9.11212 23.8698 6.5 20.4599 6.5C18.4847 6.5 16.9356 7.39792 16 8.74479C15.0851 7.40812 13.5257 6.5 11.5401 6.5C8.14059 6.5 5.5 9.11212 5.5 12.8568Z"
-            stroke="gray"
-            stroke-width="2.5"
-          ></path>
-        </svg>
-        {/* Profile Icon */}
-        <svg
-          aria-label="Profile"
-          role="img"
-          viewBox="0 0 26 26"
-          style={{
-            height: "30px",
-            width: "50px",
-            marginBottom: "100px",
-            cursor: "pointer",
-          }}
+        />
+        <MenuButton
+          svg={ProfileIcon}
+          title="Profile"
+          height={30}
+          width={30}
           onClick={() => handleNavigation("/userprofile")}
-        >
-          <title>Profile</title>
-          <circle
-            cx="13"
-            cy="7.25"
-            r="4"
-            stroke="gray"
-            stroke-width="2.5"
-          ></circle>
-          <path
-            d="M6.26678 23.75H19.744C21.603 23.75 22.5 23.2186 22.5 22.0673C22.5 19.3712 18.8038 15.75 13 15.75C7.19625 15.75 3.5 19.3712 3.5 22.0673C3.5 23.2186 4.39704 23.75 6.26678 23.75Z"
-            stroke="gray"
-            stroke-width="2.5"
-          ></path>
-        </svg>
-        {/* Pin to home Icon */}
-        <svg
-          aria-label="Pin to home"
-          role="img"
-          viewBox="0 0 24 24"
-          style={{ height: "30px", width: "50px", marginBottom: "30px" }}
-        >
-          <title>Pin to home</title>
-          <path
-            d="M12 23.922c-.072 0-.166-.085-.283-.254a3.489 3.489 0 0 1-.352-.654 5.193 5.193 0 0 1-.293-.899 4.25 4.25 0 0 1-.117-.976v-5.576h2.08v5.576c0 .319-.039.644-.117.976a5.202 5.202 0 0 1-.293.899 3.489 3.489 0 0 1-.352.654c-.11.17-.201.254-.273.254ZM5.78 16.49c-.482 0-.87-.14-1.163-.42-.286-.286-.43-.66-.43-1.123 0-.748.2-1.478.596-2.187.397-.71.947-1.345 1.65-1.905a8.372 8.372 0 0 1 2.481-1.328c.95-.332 1.98-.498 3.086-.498 1.107 0 2.132.166 3.076.498a8.372 8.372 0 0 1 2.48 1.329c.71.56 1.26 1.194 1.651 1.904.397.71.596 1.439.596 2.187 0 .463-.143.837-.43 1.123-.286.28-.67.42-1.152.42H5.779Zm.488-1.787h11.455c.182 0 .257-.104.224-.312-.058-.43-.244-.86-.556-1.29-.313-.43-.73-.82-1.25-1.171a6.823 6.823 0 0 0-1.836-.85A7.792 7.792 0 0 0 12 10.758a7.89 7.89 0 0 0-2.314.322 6.85 6.85 0 0 0-1.827.85c-.52.351-.937.742-1.25 1.172-.312.43-.5.859-.566 1.289-.033.208.042.312.225.312Zm-.84-13.086c0-.338.117-.618.351-.84.241-.228.554-.341.938-.341h10.566c.384 0 .694.113.928.341.24.222.361.502.361.84 0 .352-.136.7-.41 1.045a5.307 5.307 0 0 1-.693.723c-.293.26-.632.534-1.016.82-.384.287-.784.573-1.201.86l.361 5.41h-1.875l-.361-6.24c-.013-.17.042-.284.166-.342.3-.163.583-.326.85-.489.273-.162.514-.315.722-.459.209-.143.381-.27.518-.38.137-.118.23-.202.283-.254.046-.053.055-.098.03-.137-.02-.04-.056-.059-.108-.059H8.152a.123.123 0 0 0-.107.059c-.02.039-.01.084.03.137.051.052.146.136.282.253.144.111.32.238.528.381.215.144.452.297.713.46.267.162.553.325.859.488.124.058.182.172.176.341l-.371 6.24H8.377l.371-5.41a32.5 32.5 0 0 1-1.21-.859 19.68 19.68 0 0 1-1.017-.82 5.57 5.57 0 0 1-.683-.723c-.274-.345-.41-.693-.41-1.045Z"
-            fill="gray"
-          ></path>
-        </svg>
-        {/* More Icon */}
-        <svg
-          aria-label="More"
-          role="img"
-          viewBox="0 0 24 24"
-          style={{ height: "30px", width: "50px" }}
-        >
-          <title>More</title>
-          {/* Đường thẳng đầu tiên */}
-          <rect rx="1.25" x="3" y="7" width="20" height="3" fill="gray" />
-          {/* Đường thẳng thứ hai */}
-          <rect rx="1.25" x="3" y="15" width="14" height="3" fill="gray" />
-        </svg>
+        />
+      </div>
+      <div className="p-2 flex flex-col gap-4 items-center">
+        <MenuButton
+          svg={PinToHome}
+          title="Pin to Home"
+          height={30}
+          width={30}
+          onClick={() => {}}
+        />
+        <MenuButton
+          svg={MoreIcon}
+          title="More"
+          height={30}
+          width={30}
+          onClick={() => {}}
+        />
       </div>
     </div>
   );
