@@ -1,0 +1,32 @@
+.blog-card {
+  display: flex;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 700px;
+  color: white;
+  border-bottom: 1px solid gray;
+}
+
+.blog-card-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.blog-card-info h2 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.blog-card-info h3 {
+  margin: 5px 0;
+  font-size: 1em;
+}
+
+.blog-card-info p {
+  font-size: 0.9em;
+  color: #ddd;
+}
