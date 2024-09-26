@@ -1,37 +1,39 @@
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Post, { PostInterface } from "../model/Post";
+import User, { UserInterface } from "../model/User";
 
-const blogs = [
-  {
-    id: 1,
-    avatar: "path-to-avatar-1",
-    username: "User 1",
-    title: "Blog Title 1",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum ad at deleniti fuga quae consectetur recusandae minima voluptates vero assumenda!",
-  },
-  {
-    id: 2,
-    avatar: "path-to-avatar-2",
-    username: "User 2",
-    title: "Blog Title 2",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aspernatur dicta deleniti tempore asperiores ad ducimus odit et quam repellat aperiam vel voluptatem, quas earum doloremque ipsam commodi ratione tenetur!",
-  },
-  // Add more blog data as needed
-];
+const BlogDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); // Get the post ID from the URL
+  const [post, setPost] = useState<PostInterface | null>(null);
+  const [user, setUser] = useState<UserInterface | null>(null);
 
-const BlogDetailPage = () => {
-  const { id } = useParams<{ id: string }>(); // Specify the type of useParams
-  const blogId = id ? parseInt(id) : null; // Parse the ID only if it is defined
-  const blog =
-    blogId !== null ? blogs.find((blog) => blog.id === blogId) : null;
+  useEffect(() => {
+    const fetchPostAndUser = async () => {
+      try {
+        // Fetch the post by ID
+        const postData = await Post.getById(id!); // Assuming Post.getById(id) fetches the post
+        setPost(postData);
 
-  if (!blog) {
+        // Fetch the user by userId from the post
+        if (postData && postData.userId) {
+          const userData = await User.getById(postData.userId); // Assuming User.getById fetches user
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching post or user:", error);
+      }
+    };
+
+    fetchPostAndUser();
+  }, [id]);
+
+  if (!post || !user) {
     return (
       <div
         style={{ padding: "20px", color: "white", backgroundColor: "#1e1e1e" }}
       >
-        Blog not found.
+        Loading...
       </div>
     );
   }
@@ -40,22 +42,18 @@ const BlogDetailPage = () => {
     <div
       style={{ padding: "20px", color: "white", backgroundColor: "#1e1e1e" }}
     >
-      <h1 style={{ fontSize: "2rem" }}>{blog.title}</h1>{" "}
-      {/* Display blog title */}
-      <h2 style={{ fontSize: "1.5rem", color: "#ccc" }}>
-        by {blog.username}
-      </h2>{" "}
-      {/* Display username */}
+      THIS IS POST {id}
       <img
-        src={blog.avatar}
-        alt={blog.username}
+        src={user.avatar}
+        alt={user.name}
         style={{ width: "100px", borderRadius: "50%", marginBottom: "10px" }}
-      />{" "}
-      {/* Display avatar */}
-      <p style={{ fontSize: "1rem" }}>{blog.description}</p>{" "}
-      {/* Display blog description */}
-      <p style={{ fontSize: "1rem", color: "#aaa" }}>Blog ID: {blogId}</p>{" "}
-      {/* Optionally display the blog ID */}
+      />
+      <h1>{post.title}</h1>
+      <h2>by {user.name}</h2>
+      <p>{post.content}</p>
+      <p style={{ color: "#aaa" }}>
+        Posted on: {new Date(post.createDate).toLocaleDateString()}
+      </p>
     </div>
   );
 };
