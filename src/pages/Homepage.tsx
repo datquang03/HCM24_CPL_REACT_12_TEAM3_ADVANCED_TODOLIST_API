@@ -1,21 +1,45 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BlogCard from "../components/Blog-Card/BlogCard";
 import Post, { PostInterface } from "../model/Post";
-import User from "../model/User";
+import User, { UserInterface } from "../model/User";
 
 const Homepage = () => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
+  const [users, setUsers] = useState<UserInterface[]>([]);
+
   useEffect(() => {
     const fetchPosts = async () => {
       const allPosts = await Post.getAll();
       setPosts(allPosts);
       console.log("Initial posts:", allPosts);
-      setPosts(allPosts);
     };
-    console.log("Post", posts);
+
+    const fetchUsers = async () => {
+      const allUsers = await User.getAll(); // Assuming you have a User model with a getAll method
+      setUsers(allUsers);
+      console.log("Initial users:", allUsers);
+    };
+
     fetchPosts();
+    fetchUsers();
   }, []);
+
+  const getUser = (userId: string): UserInterface => {
+    const user = users.find((user) => user.id === userId);
+    if (!user) {
+      return {
+        id: "default-user-id",
+        name: "Unknown User",
+        email: "",
+        password: "",
+        avatar: "",
+        createDate: new Date(),
+        updateDate: new Date(),
+      };
+    }
+    return user;
+  };
 
   const navigate = useNavigate();
 
@@ -30,32 +54,15 @@ const Homepage = () => {
         padding: "20px",
       }}
     >
-      {posts.map(
-        (posts) => (
-          console.log(User.getById(posts.userId)),
-          (
-            <div
-              key={posts.id}
-              style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
-              onClick={() => navigate(`/detail/${posts.id}`)} // Use template literal to navigate to the detail page
-            >
-              <BlogCard
-                key={posts.id}
-                post={posts}
-                creator={{
-                  id: "1",
-                  name: "John Doe",
-                  avatar: "https://i.pravatar.cc/150?img=68",
-                  email: "johndoe@example.com",
-                  password: "password123",
-                  createDate: new Date(),
-                  updateDate: new Date(),
-                }}
-              />
-            </div>
-          )
-        )
-      )}
+      {posts.map((post) => (
+        <div
+          key={post.id}
+          style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
+          onClick={() => navigate(`/detail/${post.id}`)} // Use template literal to navigate to the detail page
+        >
+          <BlogCard key={post.id} post={post} creator={getUser(post.userId)} />
+        </div>
+      ))}
     </div>
   );
 };
