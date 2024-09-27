@@ -1,7 +1,7 @@
 import { Flex, Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
 import SideBarMenu from "../components/SideBarMenu";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import "../App.css";
 import { useState } from "react";
 
@@ -25,6 +25,9 @@ const DefaultLayout = () => {
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
+
+  const location = useLocation();
+  const isAdminPath = location.pathname.includes("/admin");
 
   return (
     <div>
@@ -70,7 +73,11 @@ const DefaultLayout = () => {
                 </Link>
               )}
             </div>
-            <div className="content">
+            <div className="content"
+              style={{
+                width: isAdminPath ? '80%' : '60%',
+              }}
+            >
               <Outlet />
             </div>
           </Layout>

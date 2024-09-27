@@ -7,6 +7,7 @@ import NotificationIcon from "../assets/NotificationIcon.svg";
 import ProfileIcon from "../assets/ProfileIcon.svg";
 import PinToHome from "../assets/PinToHomeIcon.svg";
 import MoreIcon from "../assets/MoreIcon.svg";
+import StarIcon from "../assets/StarIcon.svg";
 
 import { MenuButton } from "./MenuButton";
 
@@ -24,6 +25,13 @@ const SideBarMenu = () => {
         </div>
       </div>
       <div className="p-2 flex flex-col gap-4 items-center">
+        <MenuButton
+            svg={StarIcon}
+            title="Administrator"
+            height={30}
+            width={30}
+            onClick={() => handleNavigation("/admin")}
+        />
         <MenuButton
           svg={HomeIcon}
           title="Home"
