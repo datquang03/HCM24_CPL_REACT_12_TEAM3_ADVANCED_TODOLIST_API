@@ -47,7 +47,7 @@ const ManageUsersTable = ({ users }: ManageUsersTableProps) => {
     
       return  (
         <div className="flex">
-            <Table dataSource={users} columns={columns} rowKey="id" className="dark-table"/>;
+            <Table dataSource={users} columns={columns} rowKey="id" className="dark-table"  scroll={{ y: 550, x: 1400 }} /> ;
         </div>
       )
     };

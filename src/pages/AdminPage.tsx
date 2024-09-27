@@ -29,11 +29,21 @@ const AdminPage = () => {
         fetchUsers();
     }, []);
 
+    const onEdit = (postId: string) => {
+        console.log(`Edit post ${postId}`);
+        //opens a modal to edit
+    };
+
+    const onDelete = async (postId: string) => {
+        await Post.delete(postId);
+        setPosts(posts.filter((post) => post.id!== postId));
+    };
+
     const items: TabsProps['items'] = [
         {
           key: '1',
           label: 'Manage Posts',
-          children: <ManagePostsTable posts={posts} />, 
+          children: <ManagePostsTable posts={posts} onEdit={onEdit} onDelete={onDelete}/>, 
         },
         {
           key: '2',
