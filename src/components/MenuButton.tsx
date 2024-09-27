@@ -8,7 +8,7 @@ type Props = {
 
 export const MenuButton = ({ svg, title, height, width, onClick }: Props) => {
   return (
-    <div className="py-4" onClick={onClick}>
+    <div className="py-4 hover:cursor-pointer" onClick={onClick}>
       <img src={svg} alt={title} height={height} width={width} />
     </div>
   );
