@@ -8,6 +8,8 @@ import SearchPage from "./pages/Searchpage";
 import NotificationPage from "./pages/Notificationpage";
 import UserProfilePage from "./pages/UserProfilepage";
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
+
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/" element={<DefaultLayout />}>
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/notification" element={<NotificationPage />} />
