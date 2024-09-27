@@ -62,3 +62,23 @@ svg:hover {
 svg:hover path {
   fill: black; /* Màu đen cho biểu tượng khi hover */
 }
+
+.dark-table {
+  background-color: #1e1e1e !important;
+  color: #fff;
+}
+
+.dark-table .ant-table-thead > tr > th {
+  background-color: #333 !important;
+  color: #fff;
+}
+
+.dark-table .ant-table-tbody > tr > td {
+  background-color: #1e1e1e !important;
+  color: #fff;
+}
+
+.dark-table .ant-table-pagination {
+  background-color: #1e1e1e !important;
+  color: #fff;
+}
