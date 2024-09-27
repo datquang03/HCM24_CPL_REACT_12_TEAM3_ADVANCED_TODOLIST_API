@@ -76,9 +76,17 @@ svg:hover path {
 .dark-table .ant-table-tbody > tr > td {
   background-color: #1e1e1e !important;
   color: #fff;
+  white-space:nowrap; 
+  text-overflow: ellipsis; 
+  overflow:hidden; 
 }
 
 .dark-table .ant-table-pagination {
+  background-color: #1e1e1e !important;
+  color: #fff;
+}
+
+.dark-style {
   background-color: #1e1e1e !important;
   color: #fff;
 }
