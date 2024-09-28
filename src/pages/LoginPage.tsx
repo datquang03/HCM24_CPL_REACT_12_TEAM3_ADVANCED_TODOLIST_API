@@ -15,9 +15,13 @@ const LoginPage = () => {
 
       // Lưu toàn bộ thông tin người dùng vào context
       setUser(user); // Lưu đối tượng user đầy đủ
-
+      if (user.id === "1") {
+        // Điều hướng đến trang admin
+        navigate("/Admin");
+      } else {
       // Redirect to the homepage
       navigate("/homepage"); // Redirect to home page after login
+      }
     } catch (error) {
       console.error("Login failed:", error);
       // Handle error (e.g., show a notification)
