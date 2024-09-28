@@ -5,14 +5,15 @@ import Post, { PostInterface } from "../model/Post";
 import User, { UserInterface } from "../model/User";
 import ManageUsersTable from '../components/ManageUserTable';
 import ManagePostsTable from '../components/ManagePostsTable';
-
-
-  
+import EditPostModal from '../components/EditPostModal';
 
 const AdminPage = () => {
-    
     const [posts, setPosts] = useState<PostInterface[]>([]);
     const [users, setUsers] = useState<UserInterface[]>([]);
+    const [open, setOpen] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [editingPost, setEditingPost] = useState<PostInterface | null>(null);
+    const [creator, setCreator] = useState<UserInterface | null>(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -29,14 +30,35 @@ const AdminPage = () => {
         fetchUsers();
     }, []);
 
-    const onEdit = (postId: string) => {
-        console.log(`Edit post ${postId}`);
-        //opens a modal to edit
+    const onEdit = async (postId: string) => {
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+            setEditingPost(post);
+            
+            const user = await User.getById(post.userId); 
+            setCreator(user);
+            setOpen(true);
+        }
     };
 
     const onDelete = async (postId: string) => {
         await Post.delete(postId);
-        setPosts(posts.filter((post) => post.id!== postId));
+        setPosts(posts.filter((post) => post.id !== postId));
+    };
+
+    const handleOk = async (values: { title: string; content: string }) => {
+      if (editingPost) {
+        setConfirmLoading(true);
+        const updatedPost = { ...editingPost, ...values };
+        await Post.update(updatedPost);
+        setPosts(posts.map(post => (post.id === editingPost.id ? updatedPost : post)));
+        setOpen(false);
+        setConfirmLoading(false);
+    };
+  }
+
+    const handleCancel = () => {
+      setOpen(false);
     };
 
     const items: TabsProps['items'] = [
@@ -52,70 +74,19 @@ const AdminPage = () => {
         }
     ];
 
-
     return (
         <div className='px-4'>
             <Tabs defaultActiveKey="1" items={items}/> 
+            <EditPostModal
+              open={open}
+              confirmLoading={confirmLoading}
+              post={editingPost}
+              creator={creator}
+              onCancel={handleCancel}
+              onOk={handleOk}
+            />
         </div>
     )
-
 }
+
 export default AdminPage;
-
-
-
-
-// const ManageUsersTable:FC.React<ManageUsersTableProps> = ({users}) => {
-//   const [posts, setPosts] = useState<PostInterface[]>([]);
-//   const [users, setUsers] = useState<UserInterface[]>([]);
-
-
-
-//   const getUser = (userId: string): UserInterface => {
-//     const user = users.find((user) => user.id === userId);
-//     if (!user) {
-//       return {
-//         id: "default-user-id",
-//         name: "Unknown User",
-//         email: "",
-//         password: "",
-//         avatar: "",
-//         createDate: new Date(),
-//         updateDate: new Date(),
-//       };
-//     }
-//     return user;
-//   };
-
-//   const navigate = useNavigate();
-
-//   return (
-//     <div
-//       className="no-scrollbar"
-//       style={{
-//         overflow: "hidden",
-//         display: "flex",
-//         flexDirection: "column",
-//         alignItems: "center",
-//         padding: "20px",
-//       }}
-//     >
-//       {posts.map((post) => (
-//         <div
-//           key={post.id}
-//           style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
-//           onClick={() => navigate(`/detail/${post.id}`)} // Use template literal to navigate to the detail page
-//         >
-//           <BlogCard key={post.id} post={post} creator={getUser(post.userId)} />
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-
-
-
-
-
-

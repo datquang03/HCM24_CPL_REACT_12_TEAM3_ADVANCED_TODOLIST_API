@@ -9,24 +9,26 @@ import NotificationPage from "./pages/Notificationpage";
 import UserProfilePage from "./pages/UserProfilepage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
-
+import { UserProvider } from "./context/UserContext"; // UserContext để Lưu Thông Tin Người Dùng
 
 function App() {
   return (
     <div className="no-scrollbar">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<DefaultLayout />}>
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/homepage" element={<Homepage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/notification" element={<NotificationPage />} />
-            <Route path="/userprofile" element={<UserProfilePage />} />
-            <Route path="/detail/:id" element={<BlogDetailPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/homepage" element={<Homepage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/notification" element={<NotificationPage />} />
+              <Route path="/userprofile" element={<UserProfilePage />} />
+              <Route path="/detail/:id" element={<BlogDetailPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }
