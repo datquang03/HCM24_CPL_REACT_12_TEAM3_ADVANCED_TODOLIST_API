@@ -90,3 +90,34 @@ svg:hover path {
   background-color: #1e1e1e !important;
   color: #fff;
 }
+
+.dark-style .ant-modal-content{
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+.ant-modal-title {
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+.dark-form .ant-form-item-label > label {
+  color: #fff;
+}
+
+.dark-form .ant-input, .dark-form .ant-input-textarea {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-form .ant-input:focus, .dark-form .ant-input-focused {
+  border-color: #555;
+}
+
+.ant-table-row {
+  transition: opacity 0.3s ease; 
+}
+
+.ant-table-row:hover {
+  opacity: 0.8; 
+}
