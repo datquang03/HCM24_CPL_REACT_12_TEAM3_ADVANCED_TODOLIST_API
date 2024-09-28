@@ -37,7 +37,7 @@ class User implements UserInterface {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.avatar = avatar || "https://example.com/default-avatar.jpg"; 
+    this.avatar = avatar || "https://example.com/default-avatar.jpg";
     this.createDate = createDate;
     this.updateDate = updateDate;
   }
@@ -122,6 +122,10 @@ class User implements UserInterface {
       if (user.password !== password) {
         throw new Error("Invalid password");
       }
+
+      // Lưu thông tin người dùng vào sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(user));
+
       console.log("Logged in as:", user);
       return user;
     } catch (error) {

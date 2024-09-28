@@ -1,5 +1,5 @@
 // UserContext.tsx
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { UserInterface } from "../model/User"; // Đường dẫn đúng đến User model
 
 interface UserContextType {
@@ -13,6 +13,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<UserInterface | null>(null);
+
+  useEffect(() => {
+    // Lấy thông tin người dùng từ sessionStorage khi ứng dụng khởi động
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
