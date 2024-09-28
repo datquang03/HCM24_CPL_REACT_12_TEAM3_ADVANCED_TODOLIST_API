@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html,
 body {
   height: 100%; /* Ensure the body takes up full viewport height */
@@ -42,7 +41,8 @@ body {
   background-color: #1e1e1e;
   padding: 20px;
   height: calc(100vh - 20px);
-  overflow-y: auto;
+  overflow-y: scroll; 
+  scrollbar-width: none; 
 }
 
 svg {
@@ -76,9 +76,9 @@ svg:hover path {
 .dark-table .ant-table-tbody > tr > td {
   background-color: #1e1e1e !important;
   color: #fff;
-  white-space:nowrap; 
-  text-overflow: ellipsis; 
-  overflow:hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .dark-table .ant-table-pagination {
