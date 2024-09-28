@@ -12,7 +12,7 @@ const LoginPage = () => {
       console.log("Login successful:", user);
       
       // Redirect to the homepage
-      navigate("/homepage"); // Redirect to home page after login
+      navigate("/homepage", { state: { user } });
     } catch (error) {
       console.error("Login failed:", error);
       // Handle error (e.g., show a notification)

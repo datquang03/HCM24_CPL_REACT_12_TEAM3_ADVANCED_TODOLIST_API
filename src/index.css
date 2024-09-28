@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* ant-modal-content dung cai nay moi style modal */
+  .custom-modal .ant-modal-content {
+    @apply bg-stone-900; 
+  }
+}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BlogCard from "../components/Blog-Card/BlogCard";
 import Post, { PostInterface } from "../model/Post";
 import User, { UserInterface } from "../model/User";
+import PostComponent from "../components/PostComponent";
 
 const Homepage = () => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -44,26 +45,39 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="no-scrollbar"
-      style={{
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "20px",
-      }}
-    >
-      {posts.map((post) => (
-        <div
-          key={post.id}
-          style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
-          onClick={() => navigate(`/detail/${post.id}`)} // Use template literal to navigate to the detail page
-        >
-          <BlogCard key={post.id} post={post} creator={getUser(post.userId)} />
+    <>
+      {/* post */}
+      <div>
+        {/* post wrapper */}
+        <div>
+          <PostComponent />
         </div>
-      ))}
-    </div>
+      </div>
+      <div
+        className="no-scrollbar"
+        style={{
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
+            onClick={() => navigate(`/detail/${post.id}`)} // Use template literal to navigate to the detail page
+          >
+            <BlogCard
+              key={post.id}
+              post={post}
+              creator={getUser(post.userId)}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

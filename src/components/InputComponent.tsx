@@ -7,6 +7,9 @@ type InputProps = {
     setPost?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     className?:string,
     readOnly?:boolean
+    value?:string
+    onClick?:()=>void
+    onChange?:React.ChangeEventHandler<HTMLInputElement>
 }
 
 const InputComponent: React.FC<InputProps> = (props) => {

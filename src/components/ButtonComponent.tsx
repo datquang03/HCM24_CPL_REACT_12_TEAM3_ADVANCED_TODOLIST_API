@@ -11,6 +11,7 @@ type ButtonProps = {
   shape?: ButtonShape;
   variant?: ButtonVariantType;
   className?: string;
+  icon?:React.ReactNode
   onClick?: () => void;
 };
 
