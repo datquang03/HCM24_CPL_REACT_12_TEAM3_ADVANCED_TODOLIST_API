@@ -2,15 +2,20 @@ import { Button, Form, Input } from "antd";
 import React from "react";
 import User from "../model/User"; // Update with the correct import path
 import { Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../context/UserContext"; // Import useUser from UserContext
 
 const LoginPage = () => {
   const navigate = useNavigate(); // Initialize navigate
+  const { setUser } = useUserContext(); // Get setUser function from context
 
   const onFinish = async (values: any) => {
     try {
       const user = await User.login(values.username, values.password);
       console.log("Login successful:", user);
-      
+
+      // Lưu toàn bộ thông tin người dùng vào context
+      setUser(user); // Lưu đối tượng user đầy đủ
+
       // Redirect to the homepage
       navigate("/homepage"); // Redirect to home page after login
     } catch (error) {
@@ -45,7 +50,7 @@ const LoginPage = () => {
               className="rounded-lg"
               placeholder="Enter your username"
               size="large"
-              style={{ height: '50px', fontSize: '18px' }}
+              style={{ height: "50px", fontSize: "18px" }}
             />
           </Form.Item>
 
@@ -57,7 +62,7 @@ const LoginPage = () => {
               className="rounded-lg"
               placeholder="Enter your password"
               size="large"
-              style={{ height: '50px', fontSize: '18px' }}
+              style={{ height: "50px", fontSize: "18px" }}
             />
           </Form.Item>
 
@@ -67,7 +72,7 @@ const LoginPage = () => {
               htmlType="submit"
               className="w-full rounded-lg"
               size="large"
-              style={{ height: '50px', fontSize: '18px' }}
+              style={{ height: "50px", fontSize: "18px" }}
             >
               Log in
             </Button>
@@ -77,7 +82,8 @@ const LoginPage = () => {
         <div className="text-center mt-4">
           <Link to="/forgot-password" className="text-gray-500 ">
             Forgot Password?
-          </Link></div>
+          </Link>
+        </div>
       </div>
     </div>
   );
