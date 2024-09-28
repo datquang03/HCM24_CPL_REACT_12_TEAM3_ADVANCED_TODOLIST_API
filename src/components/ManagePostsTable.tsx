@@ -110,10 +110,15 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
       dataSource={posts} 
       columns={columns} 
       rowKey="id" 
-      className="dark-table" 
+      className="dark-table cursor-pointer" 
       scroll={{ y: 550, x: 1400 }} 
       pagination={{
         pageSize: 10,
+      }}
+      onRow={(record) => {
+        return {
+          onClick: () => onEdit(record.id), 
+        };
       }}
     />
   );
