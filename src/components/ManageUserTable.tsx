@@ -1,53 +1,76 @@
 import { Table, Button, Modal, Form, Input } from "antd";
-import { useState } from "react";
-import { UserInterface } from "../model/User";
+import { useEffect, useState } from "react";
+import User, { UserInterface } from "../model/User";
 
 interface ManageUsersTableProps {
   users: UserInterface[];
-  onCreateUser: (user: UserInterface) => void; 
+  onCreateUser: (user: UserInterface) => void;
 }
 
 const ManageUsersTable = ({ users, onCreateUser }: ManageUsersTableProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
 
+  const onDelete = (userId: string) => {
+    console.log("Delete user:", userId);
+    User.delete(userId);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    console.log("Users:", users);
+  }, [users]);
+
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Password',
-      dataIndex: 'password',
-      key: 'password',
+      title: "Password",
+      dataIndex: "password",
+      key: "password",
     },
     {
-      title: 'Avatar',
-      dataIndex: 'avatar',
-      key: 'avatar',
-      render: (text: string) => <img src={text} alt="avatar" style={{ width: '40px' }} />,
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (text: string) => (
+        <img src={text} alt="avatar" style={{ width: "40px" }} />
+      ),
     },
     {
-      title: 'Created Date',
-      dataIndex: 'createDate',
-      key: 'createDate',
+      title: "Created Date",
+      dataIndex: "createDate",
+      key: "createDate",
     },
     {
-      title: 'Updated Date',
-      dataIndex: 'updateDate',
-      key: 'updateDate',
-    }
+      title: "Updated Date",
+      dataIndex: "updateDate",
+      key: "updateDate",
+    },
+    {
+      title: "Control",
+      key: "control",
+      render: (record: UserInterface) => (
+        <div>
+          <Button type="primary" onClick={() => onDelete(record.id)}>
+            Delete
+          </Button>
+        </div>
+      ),
+    },
   ];
 
   const showModal = () => {
@@ -60,17 +83,15 @@ const ManageUsersTable = ({ users, onCreateUser }: ManageUsersTableProps) => {
       console.log("User created successfully:", values);
 
       const newUser: UserInterface = {
-        id: (users.length + 1).toString(),  
+        id: (users.length + 1).toString(),
         name: values.name,
         email: values.email,
         password: values.password,
-        avatar: "",  
-        createDate: new Date(), 
-        updateDate: new Date(), 
-    };
-    
+        avatar: "",
+        createDate: new Date(),
+        updateDate: new Date(),
+      };
 
-      
       onCreateUser(newUser);
 
       form.resetFields();
@@ -86,15 +107,26 @@ const ManageUsersTable = ({ users, onCreateUser }: ManageUsersTableProps) => {
 
   return (
     <div>
-      <Button type="primary" onClick={showModal} style={{ marginBottom: '16px' }}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ marginBottom: "16px" }}
+      >
         Create User
       </Button>
-      <div style={{ marginTop: '16px' }}> {/* Thêm div này */}
-        <Table dataSource={users} columns={columns} rowKey="id" className="dark-table" scroll={{ y: 550, x: 1400 }} />
+      <div style={{ marginTop: "16px" }}>
+        {/* Thêm div này */}
+        <Table
+          dataSource={users}
+          columns={columns}
+          rowKey="id"
+          className="dark-table"
+          scroll={{ y: 550, x: 1400 }}
+        />
       </div>
       <Modal
         title="Create User"
-        open={isModalVisible} 
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
@@ -124,7 +156,6 @@ const ManageUsersTable = ({ users, onCreateUser }: ManageUsersTableProps) => {
       </Modal>
     </div>
   );
-  
 };
 
 export default ManageUsersTable;

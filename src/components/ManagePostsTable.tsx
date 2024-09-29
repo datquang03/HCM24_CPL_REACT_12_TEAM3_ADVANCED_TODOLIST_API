@@ -1,38 +1,45 @@
-import React from 'react';
-import { Table, Dropdown, Button, Space } from 'antd';
-import type { MenuProps } from 'antd';
-import { DownOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React from "react";
+import { Table, Dropdown, Button, Space } from "antd";
+import type { MenuProps } from "antd";
+import { DownOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { PostInterface } from "../model/Post";
 
 interface ManagePostsTableProps {
   posts: PostInterface[];
   onEdit: (postId: string) => void;
-  onDelete: (postId: string) => void;
+  onDelete: (userId: string, postId: string) => void;
 }
 
-const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDelete }) => {
-  const handleMenuClick: MenuProps['onClick'] = (info) => {
+const ManagePostsTable: React.FC<ManagePostsTableProps> = ({
+  posts,
+  onEdit,
+  onDelete,
+}) => {
+  const handleMenuClick: MenuProps["onClick"] = (info) => {
     const { key, domEvent } = info;
     domEvent.stopPropagation(); //prevent triggering row click
 
-    const [action, postId] = key.split('_');
-    if (action === 'edit') {
+    const [action, userId, postId] = key.split("_");
+    if (action === "edit") {
       onEdit(postId);
-    } else if (action === 'delete') {
-      onDelete(postId);
+    } else if (action === "delete") {
+      onDelete(userId, postId);
     }
   };
 
-  const getActionItems = (postId: string): MenuProps['items'] => [
+  const getActionItems = (
+    userId: string,
+    postId: string
+  ): MenuProps["items"] => [
     {
-      key: `edit_${postId}`,  
-      label: 'Edit',
+      key: `edit_${postId}`,
+      label: "Edit",
       icon: <EditOutlined />,
       className: "dark-style",
     },
     {
-      key: `delete_${postId}`,  
-      label: 'Delete',
+      key: `delete_${postId}_${userId}`,
+      label: "Delete",
       icon: <DeleteOutlined />,
       className: "dark-style",
     },
@@ -40,40 +47,40 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
       width: 80,
     },
     {
-      title: 'User ID',
-      dataIndex: 'userId',
-      key: 'userId',
+      title: "User ID",
+      dataIndex: "userId",
+      key: "userId",
       width: 100,
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       width: 400,
       ellipsis: true,
     },
     {
-      title: 'Content',
-      dataIndex: 'content',
-      key: 'content',
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
       ellipsis: true,
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       width: 100,
     },
     {
-      title: 'Created Date',
-      dataIndex: 'createDate',
-      key: 'createDate',
+      title: "Created Date",
+      dataIndex: "createDate",
+      key: "createDate",
       width: 200,
       render: (date: string) => {
         const dateObj = new Date(date);
@@ -81,9 +88,9 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
       },
     },
     {
-      title: 'Updated Date',
-      dataIndex: 'updateDate',
-      key: 'updateDate',
+      title: "Updated Date",
+      dataIndex: "updateDate",
+      key: "updateDate",
       width: 200,
       render: (date: string) => {
         const dateObj = new Date(date);
@@ -91,18 +98,18 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
       },
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       width: 150,
       render: (record: PostInterface) => (
         <Dropdown
           menu={{
-            items: getActionItems(record.id), 
-            onClick: handleMenuClick,  
+            items: getActionItems(record.id, record.userId),
+            onClick: handleMenuClick,
           }}
-          trigger={['click']}
+          trigger={["click"]}
         >
-          <Button onClick={(e) => e.stopPropagation()} className='dark-style'>
+          <Button onClick={(e) => e.stopPropagation()} className="dark-style">
             <Space>
               Actions
               <DownOutlined />
@@ -125,7 +132,7 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
       }}
       onRow={(record) => {
         return {
-          onClick: () => onEdit(record.id), 
+          onClick: () => onEdit(record.id),
         };
       }}
     />
