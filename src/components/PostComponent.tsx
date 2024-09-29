@@ -39,8 +39,6 @@ const PostComponent: React.FC = () => {
     }
   };
 
- 
-
   return (
     <>
       {/*  */}

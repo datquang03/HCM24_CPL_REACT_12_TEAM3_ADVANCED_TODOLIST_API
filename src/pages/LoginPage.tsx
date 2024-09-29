@@ -1,5 +1,4 @@
 import { Button, Form, Input } from "antd";
-import React from "react";
 import User from "../model/User"; // Update with the correct import path
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext"; // Import useUser from UserContext
@@ -19,10 +18,9 @@ const LoginPage = () => {
         // Điều hướng đến trang admin
         navigate("/Admin");
       } else {
-      // Redirect to the homepage
+        // Redirect to the homepage
 
-      navigate("/homepage", { state: { user } });
-
+        navigate("/homepage", { state: { user } });
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -93,7 +91,5 @@ const LoginPage = () => {
       </div>
     </div>
   );
-}
-;
-
+};
 export default LoginPage;
