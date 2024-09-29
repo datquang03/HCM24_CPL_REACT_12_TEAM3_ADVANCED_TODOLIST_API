@@ -6,7 +6,6 @@ import Post, { PostInterface } from "../model/Post";
 import User, { UserInterface } from "../model/User";
 
 const SearchPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [users, setUsers] = useState<UserInterface[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<UserInterface[]>([]);
@@ -31,7 +30,6 @@ const SearchPage = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchTerm(value);
 
     if (value) {
       // search by user name
