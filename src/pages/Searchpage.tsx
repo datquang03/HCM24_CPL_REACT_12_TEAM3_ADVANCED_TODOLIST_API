@@ -6,10 +6,6 @@ import Post, { PostInterface } from "../model/Post";
 import User, { UserInterface } from "../model/User";
 
 const SearchPage = () => {
-<<<<<<< HEAD
-  const [searchTerm, setSearchTerm] = useState("");
-=======
->>>>>>> refs/remotes/origin/main
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [users, setUsers] = useState<UserInterface[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<UserInterface[]>([]);
@@ -109,16 +105,11 @@ const SearchPage = () => {
       {filteredUsers.length > 0 && (
         <List
           dataSource={filteredUsers}
-<<<<<<< HEAD
           renderItem={(user) => (
             <div
               className="flex items-center mb-4 cursor-pointer mt-4"
-              onClick={handleClickUserInfo}
+              onClick={() => handleClickUserInfo(user.id)}
             >
-=======
-          renderItem={user => (
-            <div className="flex items-center mb-4 cursor-pointer mt-4" onClick={ () => handleClickUserInfo(user.id)}>
->>>>>>> refs/remotes/origin/main
               <img
                 className="w-10 h-10 rounded-full mr-4 mb-2 mt-2 ml-4"
                 src={user.avatar}
