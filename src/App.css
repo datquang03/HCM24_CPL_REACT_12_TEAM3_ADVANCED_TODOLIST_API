@@ -41,8 +41,8 @@ body {
   background-color: #1e1e1e;
   padding: 20px;
   height: calc(100vh - 20px);
-  overflow-y: scroll; 
-  scrollbar-width: none; 
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 svg {
@@ -91,7 +91,7 @@ svg:hover path {
   color: #fff;
 }
 
-.dark-style .ant-modal-content{
+.dark-style .ant-modal-content {
   background-color: #1f1f1f;
   color: #fff;
 }
@@ -105,19 +105,24 @@ svg:hover path {
   color: #fff;
 }
 
-.dark-form .ant-input, .dark-form .ant-input-textarea {
+.dark-form .ant-input,
+.dark-form .ant-input-textarea {
   background-color: #333;
   color: #fff;
 }
 
-.dark-form .ant-input:focus, .dark-form .ant-input-focused {
+.dark-form .ant-input:focus,
+.dark-form .ant-input-focused {
   border-color: #555;
 }
 
 .ant-table-row {
-  transition: opacity 0.3s ease; 
+  transition: opacity 0.3s ease;
 }
 
 .ant-table-row:hover {
-  opacity: 0.8; 
+  opacity: 0.8;
+}
+.ant-layout {
+  background-color: black !important;
 }
