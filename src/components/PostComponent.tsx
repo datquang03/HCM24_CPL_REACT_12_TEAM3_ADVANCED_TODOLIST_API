@@ -7,18 +7,23 @@ import { FileImageFilled, TagFilled } from "@ant-design/icons";
 import usePost from "../api/usePost";
 import { useUserContext } from "../context/UserContext";
 
+type PostText = {
+  content: string,
+  title:string
+}
+
 const PostComponent: React.FC = () => {
   const {user} = useUserContext();
   console.log("user", user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [postContent, setPostContent] = useState<string>("");
+  const [postContent, setPostContent] = useState<PostText>({} as PostText);
+
   const postUser: PostInterface = {
-    // id tu tao
     id: "123",
-    content: postContent,
+    content: postContent.content,
     createDate: new Date(),
     status: "Posted",
-    title: "New Thread",
+    title:postContent.title,
     userId: user?.id as string ,
     updateDate: new Date(),
   };
@@ -52,6 +57,7 @@ const PostComponent: React.FC = () => {
             />
           </div>
           {/* Input */}
+          
           <div className="flex-grow">
             <InputComponent
               placeholder="What's on your mind?"
@@ -113,16 +119,25 @@ const PostComponent: React.FC = () => {
                   <p className="text-white ml-3">{user?.name}</p>
                 </div>
                 <InputComponent
+                  placeholder="Title?"
+                  className="w-full border-none bg-transparent text-stone-400 placeholder-stone-400 focus:outline-none focus:bg-transparent hover:bg-transparent"
+                  aria-label="Post title"
+                  onClick={showModal}
+                  onChange={
+                    (e: React.ChangeEvent<HTMLInputElement>) =>
+                      setPostContent({...postContent, title:e.target.value})}
+                />
+                <InputComponent
                   placeholder="What's new?"
                   className="w-full border-none bg-transparent text-stone-400 placeholder-stone-400 focus:outline-none focus:bg-transparent hover:bg-transparent"
                   aria-label="Post input"
                   onClick={showModal}
-                  onChange={useCallback(
+                  onChange={
                     (e: React.ChangeEvent<HTMLInputElement>) =>
-                      setPostContent(e.target.value),
-                    []
-                  )}
+                      setPostContent({...postContent,content:e.target.value})
+                  }
                 />
+
                 {/* icons */}
                 <div className="my-4">
                   <ButtonComponent
