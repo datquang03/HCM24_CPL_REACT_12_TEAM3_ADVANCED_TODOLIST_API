@@ -9,9 +9,9 @@ import { useUserContext } from "../context/UserContext";
 
 type PostText = {
   content: string,
-  title:string
+  title:string,
+  
 }
-
 const PostComponent: React.FC = () => {
   const {user} = useUserContext();
   console.log("user", user);
@@ -162,8 +162,6 @@ const PostComponent: React.FC = () => {
           </div>
         </div>
       </Modal>
-
-      {/* Custom Styles for Modal */}
     </>
   );
 };
