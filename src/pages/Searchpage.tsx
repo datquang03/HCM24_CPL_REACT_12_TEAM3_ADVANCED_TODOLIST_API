@@ -52,8 +52,8 @@ const SearchPage = () => {
   };
   const navigate = useNavigate();
 
-  const handleClickUserInfo = () => {
-    // view detail when click user
+  const handleClickUserInfo = (userId: string) => {
+    navigate(`/user/${userId}`);
   };
 
   const handleClickPostInfo = (postId: string) => {
@@ -100,12 +100,11 @@ const SearchPage = () => {
           style={{ width: '700px' }}
         />
       )}
-
       {filteredUsers.length > 0 && (
         <List
           dataSource={filteredUsers}
           renderItem={user => (
-            <div className="flex items-center mb-4 cursor-pointer mt-4" onClick={handleClickUserInfo}>
+            <div className="flex items-center mb-4 cursor-pointer mt-4" onClick={ () => handleClickUserInfo(user.id)}>
               <img
                 className="w-10 h-10 rounded-full mr-4 mb-2 mt-2 ml-4"
                 src={user.avatar}
