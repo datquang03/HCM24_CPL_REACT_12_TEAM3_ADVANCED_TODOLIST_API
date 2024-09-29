@@ -3,7 +3,7 @@ import Sider from "antd/es/layout/Sider";
 import SideBarMenu from "../components/SideBarMenu";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "../App.css";
-import { useState } from "react";
+import { useUserContext } from "../context/UserContext";
 
 const siderStyle: React.CSSProperties = {
   textAlign: "center",
@@ -19,12 +19,13 @@ const layoutStyle: React.CSSProperties = {
 
 const DefaultLayout = () => {
   // State to track login status
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, setUser } = useUserContext(); // Access user state
 
-  // Mock function to handle login, replace with your actual login logic
-  const handleLogin = () => {
-    setIsLoggedIn(true);
+  const handleLogout = () => {
+    setUser(null); // Clear user data on logout
   };
+
+  const isLoggedIn = !!user; // Check if the user is logged in
 
   const location = useLocation();
   const isAdminPath = location.pathname.includes("/admin");
@@ -57,7 +58,7 @@ const DefaultLayout = () => {
               <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
                 Threads
               </div>
-              {!isLoggedIn && ( // Conditional rendering
+              {!isLoggedIn ? (
                 <Link to="/login" style={{ position: 'absolute', right: '20px' }}>
                   <button
                     style={{
@@ -66,18 +67,27 @@ const DefaultLayout = () => {
                       padding: '4px 16px',
                       borderRadius: '8px',
                     }}
-                    onClick={handleLogin} // Call the mock login function
                   >
                     Login
                   </button>
                 </Link>
+              ) : (
+                <Link to="/" style={{ position: 'absolute', right: '20px' }}>
+                <button
+                  style={{
+                    backgroundColor: 'white',
+                    color: 'black',
+                    padding: '4px 16px',
+                    borderRadius: '8px',
+                  }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+                </Link>
               )}
             </div>
-            <div className="content"
-              style={{
-                width: isAdminPath ? '80%' : '60%',
-              }}
-            >
+            <div className="content" style={{ width: isAdminPath ? '80%' : '60%' }}>
               <Outlet />
             </div>
           </Layout>
