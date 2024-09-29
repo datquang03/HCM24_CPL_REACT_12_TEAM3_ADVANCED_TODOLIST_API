@@ -30,6 +30,12 @@ const AdminPage = () => {
         fetchUsers();
     }, []);
 
+    const onCreateUser = async (newUser: UserInterface) => {
+      await User.create(newUser);
+      setUsers([...users, newUser]); 
+  };
+  
+
     const onEdit = async (postId: string) => {
         const post = posts.find(p => p.id === postId);
         if (post) {
@@ -71,7 +77,7 @@ const AdminPage = () => {
         {
           key: '2',
           label: 'Manage Users',
-          children: <ManageUsersTable users={users} />, 
+          children: <ManageUsersTable users={users} onCreateUser={onCreateUser} />,
         }
     ];
 
