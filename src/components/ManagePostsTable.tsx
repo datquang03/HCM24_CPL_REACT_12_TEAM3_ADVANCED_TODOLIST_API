@@ -11,28 +11,30 @@ interface ManagePostsTableProps {
 }
 
 const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDelete }) => {
-  const handleMenuClick = (key: string, postId: string) => {
-    if (key === 'edit') {
+  const handleMenuClick: MenuProps['onClick'] = (info) => {
+    const { key, domEvent } = info;
+    domEvent.stopPropagation(); //prevent triggering row click
+
+    const [action, postId] = key.split('_');
+    if (action === 'edit') {
       onEdit(postId);
-    } else if (key === 'delete') {
+    } else if (action === 'delete') {
       onDelete(postId);
     }
   };
 
   const getActionItems = (postId: string): MenuProps['items'] => [
     {
-      key: 'edit',
+      key: `edit_${postId}`,  
       label: 'Edit',
       icon: <EditOutlined />,
-      onClick: () => handleMenuClick('edit', postId),
-      className: "dark-style"
+      className: "dark-style",
     },
     {
-      key: 'delete',
+      key: `delete_${postId}`,  
       label: 'Delete',
       icon: <DeleteOutlined />,
-      onClick: () => handleMenuClick('delete', postId),
-      className: "dark-style"
+      className: "dark-style",
     },
   ];
 
@@ -93,8 +95,14 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
       key: 'actions',
       width: 150,
       render: (record: PostInterface) => (
-        <Dropdown menu={{ items: getActionItems(record.id) }} trigger={['click']} className='dark-style'>
-          <Button>
+        <Dropdown
+          menu={{
+            items: getActionItems(record.id), 
+            onClick: handleMenuClick,  
+          }}
+          trigger={['click']}
+        >
+          <Button onClick={(e) => e.stopPropagation()} className='dark-style'>
             <Space>
               Actions
               <DownOutlined />
@@ -106,12 +114,12 @@ const ManagePostsTable: React.FC<ManagePostsTableProps> = ({ posts, onEdit, onDe
   ];
 
   return (
-    <Table 
-      dataSource={posts} 
-      columns={columns} 
-      rowKey="id" 
-      className="dark-table cursor-pointer" 
-      scroll={{ y: 550, x: 1400 }} 
+    <Table
+      dataSource={posts}
+      columns={columns}
+      rowKey="id"
+      className="dark-table cursor-pointer"
+      scroll={{ y: 550, x: 1400 }}
       pagination={{
         pageSize: 10,
       }}
