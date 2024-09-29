@@ -4,8 +4,10 @@ import BlogCard from "../components/Blog-Card/BlogCard";
 import Post, { PostInterface } from "../model/Post";
 import User, { UserInterface } from "../model/User";
 import PostComponent from "../components/PostComponent";
+import { useUserContext } from "../context/UserContext";
 
 const Homepage = () => {
+  const { user } = useUserContext();
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [users, setUsers] = useState<UserInterface[]>([]);
 
@@ -46,13 +48,16 @@ const Homepage = () => {
 
   return (
     <>
-      {/* post */}
-      <div>
-        {/* post wrapper */}
+      {user && (
         <div>
-          <PostComponent />
+          {/* post wrapper */}
+          <div>
+            <PostComponent />
+          </div>
         </div>
-      </div>
+      )}
+      {/* post */}
+
       <div
         className="no-scrollbar"
         style={{

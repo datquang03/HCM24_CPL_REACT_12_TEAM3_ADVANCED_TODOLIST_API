@@ -1,15 +1,14 @@
 import React, { useCallback, useState } from "react";
 import InputComponent from "./InputComponent";
 import ButtonComponent from "./ButtonComponent";
-import { useLocation } from "react-router-dom";
 import { Modal } from "antd";
 import { PostInterface } from "../model/Post";
 import { FileImageFilled, TagFilled } from "@ant-design/icons";
 import usePost from "../api/usePost";
+import { useUserContext } from "../context/UserContext";
 
 const PostComponent: React.FC = () => {
-  const location = useLocation();
-  const { user } = location?.state || {}; // Assuming `location.state` has the type `PostInterface`
+  const {user} = useUserContext();
   console.log("user", user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [postContent, setPostContent] = useState<string>("");
@@ -19,8 +18,8 @@ const PostComponent: React.FC = () => {
     content: postContent,
     createDate: new Date(),
     status: "Posted",
-    title: "Anh",
-    userId: "Anhsapper",
+    title: "New Thread",
+    userId: user?.id as string ,
     updateDate: new Date(),
   };
 
@@ -39,8 +38,6 @@ const PostComponent: React.FC = () => {
     }
   };
 
- 
-
   return (
     <>
       {/*  */}
@@ -49,7 +46,7 @@ const PostComponent: React.FC = () => {
           {/* Avatar */}
           <div className="flex-shrink-0">
             <img
-              src="https://th.bing.com/th/id/OIP.aVtg8witXWnxcT0MTTB2tQHaHa?rs=1&pid=ImgDetMain"
+              src={user?.avatar}
               alt="User Avatar"
               className="w-12 h-12 rounded-full"
             />
@@ -105,15 +102,15 @@ const PostComponent: React.FC = () => {
               {/* img */}
               <div className="flex-shrink-0">
                 <img
-                  src="https://th.bing.com/th/id/OIP.aVtg8witXWnxcT0MTTB2tQHaHa?rs=1&pid=ImgDetMain"
-                  alt="User Avatar"
+                  src={user?.avatar}
+                  alt={user?.name}
                   className="w-12 h-12 rounded-full"
                 />
               </div>
               {/* content */}
               <div className="flex flex-col w-full">
                 <div>
-                  <p className="text-white ml-3">Anhsapper</p>
+                  <p className="text-white ml-3">{user?.name}</p>
                 </div>
                 <InputComponent
                   placeholder="What's new?"

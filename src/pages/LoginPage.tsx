@@ -21,7 +21,7 @@ const LoginPage = () => {
       } else {
       // Redirect to the homepage
 
-      navigate("/homepage", { state: { user } });
+      navigate("/homepage");
 
       }
     } catch (error) {
