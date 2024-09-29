@@ -48,7 +48,7 @@ const Homepage = () => {
 
   return (
     <>
-      {(
+      {user &&(
         <div>
           {/* post wrapper */}
           <div>
