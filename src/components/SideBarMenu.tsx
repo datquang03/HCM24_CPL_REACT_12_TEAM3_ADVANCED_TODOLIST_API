@@ -12,6 +12,8 @@ import StarIcon from "../assets/StarIcon.svg";
 import { MenuButton } from "./MenuButton";
 
 const SideBarMenu = () => {
+  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  console.log(user);
   const navigateTo = useCustomNavigate();
 
   const handleNavigation = (path: string) => {
@@ -25,13 +27,17 @@ const SideBarMenu = () => {
         </div>
       </div>
       <div className="p-2 flex flex-col gap-4 items-center">
-        <MenuButton
-            svg={StarIcon}
-            title="Administrator"
-            height={30}
-            width={30}
-            onClick={() => handleNavigation("/admin")}
-        />
+        {user.id === "1" && (
+          <div className="">
+            <MenuButton
+              svg={StarIcon}
+              title="Administrator"
+              height={30}
+              width={30}
+              onClick={() => handleNavigation("/admin")}
+            />
+          </div>
+        )}
         <MenuButton
           svg={HomeIcon}
           title="Home"

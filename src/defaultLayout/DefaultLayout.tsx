@@ -4,6 +4,8 @@ import SideBarMenu from "../components/SideBarMenu";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "../App.css";
 import { useUserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const siderStyle: React.CSSProperties = {
   textAlign: "center",
@@ -18,17 +20,25 @@ const layoutStyle: React.CSSProperties = {
 };
 
 const DefaultLayout = () => {
-  // State to track login status
   const { user, setUser } = useUserContext(); // Access user state
 
   const handleLogout = () => {
-    setUser(null); // Clear user data on logout
+    setUser(null);
+    sessionStorage.clear(); // Clear user data on logout
+    window.location.reload();
   };
 
   const isLoggedIn = !!user; // Check if the user is logged in
 
   const location = useLocation();
   const isAdminPath = location.pathname.includes("/admin");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (window.location.pathname === "/") {
+      navigate("/homepage");
+    }
+  }, [navigate]);
 
   return (
     <div>
@@ -41,53 +51,65 @@ const DefaultLayout = () => {
             <div
               className="header"
               style={{
-                position: 'fixed',
+                position: "fixed",
                 top: 0,
-                left: '5%',
-                width: '95%',
-                height: '60px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'black',
+                left: "5%",
+                width: "95%",
+                height: "60px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "black",
                 zIndex: 1,
-                color: 'white',
-                fontSize: '24px',
+                color: "white",
+                fontSize: "24px",
               }}
             >
-              <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                }}
+              >
                 Threads
               </div>
               {!isLoggedIn ? (
-                <Link to="/login" style={{ position: 'absolute', right: '20px' }}>
+                <Link
+                  to="/login"
+                  style={{ position: "absolute", right: "20px" }}
+                >
                   <button
                     style={{
-                      backgroundColor: 'white',
-                      color: 'black',
-                      padding: '4px 16px',
-                      borderRadius: '8px',
+                      backgroundColor: "white",
+                      color: "black",
+                      padding: "4px 16px",
+                      borderRadius: "8px",
                     }}
                   >
                     Login
                   </button>
                 </Link>
               ) : (
-                <Link to="/" style={{ position: 'absolute', right: '20px' }}>
-                <button
-                  style={{
-                    backgroundColor: 'white',
-                    color: 'black',
-                    padding: '4px 16px',
-                    borderRadius: '8px',
-                  }}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+                <Link to="/" style={{ position: "absolute", right: "20px" }}>
+                  <button
+                    style={{
+                      backgroundColor: "white",
+                      color: "black",
+                      padding: "4px 16px",
+                      borderRadius: "8px",
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
                 </Link>
               )}
             </div>
-            <div className="content" style={{ width: isAdminPath ? '80%' : '60%' }}>
+            <div
+              className="content"
+              style={{ width: isAdminPath ? "80%" : "60%" }}
+            >
               <Outlet />
             </div>
           </Layout>
