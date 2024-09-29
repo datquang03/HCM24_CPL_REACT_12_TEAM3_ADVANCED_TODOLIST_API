@@ -3,6 +3,7 @@ import axios from "axios";
 const useDelete = async (endpoint: string) => {
   const url = `${import.meta.env.VITE_API_URL}/${endpoint}`;
   try {
+    // console.log(url);
     const response = await axios.delete(url);
     return response.data;
   } catch (error) {

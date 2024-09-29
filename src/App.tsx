@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage";
 import SearchPage from "./pages/Searchpage";
 import NotificationPage from "./pages/Notificationpage";
 import UserProfilePage from "./pages/UserProfilepage";
+import OtherUserProfilePage from "./pages/OtherUserProfilePage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import { UserProvider } from "./context/UserContext"; // UserContext để Lưu Thông Tin Người Dùng
@@ -25,6 +26,7 @@ function App() {
               <Route path="/notification" element={<NotificationPage />} />
               <Route path="/userprofile" element={<UserProfilePage />} />
               <Route path="/detail/:id" element={<BlogDetailPage />} />
+              <Route path="/user/:userId" element={<OtherUserProfilePage />} />
             </Route>
           </Routes>
         </BrowserRouter>

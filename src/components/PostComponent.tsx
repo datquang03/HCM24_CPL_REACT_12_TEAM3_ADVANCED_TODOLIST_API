@@ -1,26 +1,30 @@
-import React, { useCallback, useState } from "react";
+import React, {useState } from "react";
 import InputComponent from "./InputComponent";
 import ButtonComponent from "./ButtonComponent";
-import { useLocation } from "react-router-dom";
 import { Modal } from "antd";
 import { PostInterface } from "../model/Post";
 import { FileImageFilled, TagFilled } from "@ant-design/icons";
 import usePost from "../api/usePost";
+import { useUserContext } from "../context/UserContext";
 
+type PostText = {
+  content: string,
+  title:string,
+  
+}
 const PostComponent: React.FC = () => {
-  const location = useLocation();
-  const { user } = location?.state || {}; // Assuming `location.state` has the type `PostInterface`
+  const {user} = useUserContext();
   console.log("user", user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [postContent, setPostContent] = useState<string>("");
+  const [postContent, setPostContent] = useState<PostText>({} as PostText);
+
   const postUser: PostInterface = {
-    // id tu tao
     id: "123",
-    content: postContent,
+    content: postContent.content,
     createDate: new Date(),
     status: "Posted",
-    title: "Anh",
-    userId: "Anhsapper",
+    title:postContent.title,
+    userId: user?.id as string ,
     updateDate: new Date(),
   };
 
@@ -47,12 +51,13 @@ const PostComponent: React.FC = () => {
           {/* Avatar */}
           <div className="flex-shrink-0">
             <img
-              src="https://th.bing.com/th/id/OIP.aVtg8witXWnxcT0MTTB2tQHaHa?rs=1&pid=ImgDetMain"
+              src={user?.avatar}
               alt="User Avatar"
               className="w-12 h-12 rounded-full"
             />
           </div>
           {/* Input */}
+          
           <div className="flex-grow">
             <InputComponent
               placeholder="What's on your mind?"
@@ -103,27 +108,36 @@ const PostComponent: React.FC = () => {
               {/* img */}
               <div className="flex-shrink-0">
                 <img
-                  src="https://th.bing.com/th/id/OIP.aVtg8witXWnxcT0MTTB2tQHaHa?rs=1&pid=ImgDetMain"
-                  alt="User Avatar"
+                  src={user?.avatar}
+                  alt={user?.name}
                   className="w-12 h-12 rounded-full"
                 />
               </div>
               {/* content */}
               <div className="flex flex-col w-full">
                 <div>
-                  <p className="text-white ml-3">Anhsapper</p>
+                  <p className="text-white ml-3">{user?.name}</p>
                 </div>
+                <InputComponent
+                  placeholder="Title?"
+                  className="w-full border-none bg-transparent text-stone-400 placeholder-stone-400 focus:outline-none focus:bg-transparent hover:bg-transparent"
+                  aria-label="Post title"
+                  onClick={showModal}
+                  onChange={
+                    (e: React.ChangeEvent<HTMLInputElement>) =>
+                      setPostContent({...postContent, title:e.target.value})}
+                />
                 <InputComponent
                   placeholder="What's new?"
                   className="w-full border-none bg-transparent text-stone-400 placeholder-stone-400 focus:outline-none focus:bg-transparent hover:bg-transparent"
                   aria-label="Post input"
                   onClick={showModal}
-                  onChange={useCallback(
+                  onChange={
                     (e: React.ChangeEvent<HTMLInputElement>) =>
-                      setPostContent(e.target.value),
-                    []
-                  )}
+                      setPostContent({...postContent,content:e.target.value})
+                  }
                 />
+
                 {/* icons */}
                 <div className="my-4">
                   <ButtonComponent
@@ -148,8 +162,6 @@ const PostComponent: React.FC = () => {
           </div>
         </div>
       </Modal>
-
-      {/* Custom Styles for Modal */}
     </>
   );
 };

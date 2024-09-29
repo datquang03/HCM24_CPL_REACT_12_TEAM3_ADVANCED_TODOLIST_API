@@ -102,7 +102,8 @@ class Post implements PostInterface {
 
   static async delete(id: string) {
     try {
-      await useDelete(`/post/${id}`);
+      const response = await useDelete(`/post/${id}`);
+      return response;
     } catch (error) {
       console.error("Error deleting post:", error);
       throw error;
