@@ -19,7 +19,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, creator }) => {
     toggleMenu();
   };
   return (
-    <div className="blog-card">
+    <div className="blog-card ">
       <img
         src={creator?.avatar}
         alt={creator?.name}
