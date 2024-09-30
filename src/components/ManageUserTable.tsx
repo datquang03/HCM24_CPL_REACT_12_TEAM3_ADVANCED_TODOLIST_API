@@ -115,7 +115,7 @@ const ManageUsersTable = ({ users, onCreateUser }: ManageUsersTableProps) => {
         Create User
       </Button>
       <div style={{ marginTop: "16px" }}>
-        {/* Thêm div này */}
+        {}
         <Table
           dataSource={users}
           columns={columns}
