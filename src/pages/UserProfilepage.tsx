@@ -281,7 +281,7 @@ const UserProfilePage = () => {
                           </Menu.Item>
                           <Menu.Item
                             key="delete"
-                            onClick={() => handleDelete(post.id)}
+                            onClick={() => handleDelete(post.userId, post.id)}
                           >
                             Delete
                           </Menu.Item>
