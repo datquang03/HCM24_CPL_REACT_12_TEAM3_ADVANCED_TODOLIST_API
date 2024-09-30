@@ -48,7 +48,7 @@ const Homepage = () => {
 
   return (
     <>
-      {user &&(
+      {user && (
         <div>
           {/* post wrapper */}
           <div>
@@ -71,7 +71,7 @@ const Homepage = () => {
         {posts.map((post) => (
           <div
             key={post.id}
-            style={{ cursor: "pointer", marginBottom: "20px" }} // Add margin for spacing
+            style={{ cursor: "pointer", marginBottom: "20px", width: "100%" }} // Add margin for spacing
             onClick={() => navigate(`/detail/${post.id}`)} // Use template literal to navigate to the detail page
           >
             <BlogCard

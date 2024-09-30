@@ -25,6 +25,7 @@ const DefaultLayout = () => {
   const handleLogout = () => {
     setUser(null);
     sessionStorage.clear(); // Clear user data on logout
+    navigate("/");
     window.location.reload();
   };
 

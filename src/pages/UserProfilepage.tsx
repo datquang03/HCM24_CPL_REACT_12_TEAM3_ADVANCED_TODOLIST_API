@@ -101,9 +101,9 @@ const UserProfilePage = () => {
     showModal();
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (userId: string, id: string) => {
     try {
-      await Post.delete(id); // Gọi API để xóa bài viết
+      await Post.delete(userId, id); // Gọi API để xóa bài viết
       setUserPosts((prevPosts) => prevPosts.filter((post) => post.id !== id)); // Cập nhật lại danh sách bài viết
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -326,6 +326,7 @@ const UserProfilePage = () => {
                           </Menu.Item>
                           <Menu.Item
                             key="delete"
+                            onClick={() => handleDelete(post.userId, post.id)}
                             style={{ color: "blue" }}
                             onClick={(e) => {
                               e.domEvent.stopPropagation(); // Ngăn sự kiện điều hướng khi click "Delete"
