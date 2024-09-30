@@ -49,6 +49,7 @@ const AdminPage = () => {
   const onDelete = (userId: string, postId: string) => {
     console.log(userId, postId);
     Post.delete(userId, postId);
+    setPosts(posts.filter((p) => p.id!== postId));
   };
 
   const handleOk = async (values: { title: string; content: string }) => {
