@@ -95,6 +95,7 @@ class User implements UserInterface {
     };
     try {
       const response = await usePut(`/user/${id}`, userData);
+      console.log("Updated user from server:", response);
       return response;
     } catch (error) {
       console.error("Error updating user:", error);

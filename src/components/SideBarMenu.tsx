@@ -13,7 +13,6 @@ import { MenuButton } from "./MenuButton";
 
 const SideBarMenu = () => {
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-  console.log(user);
   const navigateTo = useCustomNavigate();
 
   const handleNavigation = (path: string) => {

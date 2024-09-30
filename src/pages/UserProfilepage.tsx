@@ -6,12 +6,16 @@ import { useUserContext } from "../context/UserContext";
 import Post, { PostInterface } from "../model/Post";
 import { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import UpdateUserForm from "../components/UpdateUser";
 
 const UserProfilePage = () => {
   const { user } = useUserContext(); // Lấy thông tin người dùng từ context
   const [userPosts, setUserPosts] = useState<PostInterface[]>([]); // Định nghĩa kiểu cho userPosts
+  const navigate = useNavigate();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isUpdateUserVisible, setIsUpdateUserVisible] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostContent, setNewPostContent] = useState("");
   const [currentPostId, setCurrentPostId] = useState<string | null>(null); // ID của bài viết hiện tại
@@ -35,6 +39,10 @@ const UserProfilePage = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+
+  // Show modal for updating user
+  const showUpdateUserModal = () => setIsUpdateUserVisible(true);
+  const handleUpdateUserCancel = () => setIsUpdateUserVisible(false);
 
   // Function to handle OK button click in modal
   // Function to handle OK button click in modal
@@ -169,9 +177,17 @@ const UserProfilePage = () => {
           </div>
 
           {/* Edit Profile Button */}
-          <button className="mt-4 w-full h-8 rounded-md border border-[#424141] px-4 text-lg">
+          <button
+            onClick={showUpdateUserModal}
+            className="mt-4 w-full h-8 rounded-md border border-[#424141] px-4 text-lg"
+          >
             Edit profile
           </button>
+          {/* Modal for updating user */}
+          <UpdateUserForm
+            visible={isUpdateUserVisible}
+            onClose={handleUpdateUserCancel}
+          />
 
           {/* Post Creation Area (Moved above the posts) */}
           <div className="mt-4 flex items-center">
@@ -204,15 +220,38 @@ const UserProfilePage = () => {
           }}
         >
           <Modal
-            title="Create New Post"
+            title={
+              <div
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "bold",
+                  background: "#181818",
+                }}
+              >
+                Create New Post
+              </div>
+            } // Thay đổi màu tiêu đề ở đây
             visible={isModalVisible}
             onOk={handleOk}
             onCancel={handleCancel}
             okText="Post"
             cancelText="Cancel"
             style={{ top: "200px" }}
+            okButtonProps={{
+              style: {
+                borderRadius: "20px", // Bo tròn
+              },
+            }}
+            cancelButtonProps={{
+              style: {
+                borderRadius: "20px", // Bo tròn
+                background: "#777777",
+                color: "#000",
+              },
+            }}
           >
             <Input
+              title="title post"
               placeholder="Post Title"
               value={newPostTitle}
               onChange={(e) => setNewPostTitle(e.target.value)}
@@ -245,27 +284,30 @@ const UserProfilePage = () => {
                 {userPosts.map((post: PostInterface) => (
                   <li
                     key={post.id}
-                    className="border-b pb-4 flex items-start justify-between"
+                    className="border-b pb-4 flex items-start justify-between cursor-pointer"
+                    onClick={() => navigate(`/detail/${post.id}`)} // Add onClick for navigation
                   >
-                    <div className="flex">
+                    <div className="flex p-4 border-b border-gray-300">
                       <img
                         src={user?.avatar}
                         alt="Avatar"
                         className="w-9 h-9 rounded-full mr-3"
                       />
-                      <div>
-                        <div className="flex">
-                          <div className="text-gray-500 text-sm">
+                      <div className="flex-1">
+                        <div className="flex items-center">
+                          <div className="text-sm font-semibold">
                             <span>{user?.name}</span>
                           </div>
-                          <div className="text-sm ml-2">
-                            <span className="text-[#777777]">
+                          <div className="text-sm ml-2 text-[#777777]">
+                            <span>
                               {new Date(post.createDate).toLocaleDateString()}
                             </span>
                           </div>
                         </div>
-                        <h3 className="font-bold text-lg">{post.title}</h3>
-                        <p className="">{post.content}</p>
+                        <h3 className="font-bold text-xl  mt-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-100 mt-1">{post.content}</p>
                       </div>
                     </div>
 
@@ -275,13 +317,20 @@ const UserProfilePage = () => {
                         <Menu>
                           <Menu.Item
                             key="edit"
-                            onClick={() => handleEdit(post)}
+                            onClick={(e) => {
+                              e.domEvent.stopPropagation(); // Ngăn sự kiện điều hướng khi click "Edit"
+                              handleEdit(post);
+                            }}
                           >
                             Edit
                           </Menu.Item>
                           <Menu.Item
                             key="delete"
-                            onClick={() => handleDelete(post.id)}
+                            style={{ color: "blue" }}
+                            onClick={(e) => {
+                              e.domEvent.stopPropagation(); // Ngăn sự kiện điều hướng khi click "Delete"
+                              handleDelete(post.id);
+                            }}
                           >
                             Delete
                           </Menu.Item>
@@ -289,7 +338,10 @@ const UserProfilePage = () => {
                       }
                       trigger={["click"]}
                     >
-                      <EllipsisOutlined className="text-lg cursor-pointer" />
+                      <EllipsisOutlined
+                        className="cursor-pointer p-4 rounded-full "
+                        onClick={(e) => e.stopPropagation()} // Ngăn điều hướng khi click vào nút này
+                      />
                     </Dropdown>
                   </li>
                 ))}
