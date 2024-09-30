@@ -4,13 +4,14 @@ import "./index.css";
 import DefaultLayout from "./defaultLayout/DefaultLayout";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import Homepage from "./pages/Homepage";
-import SearchPage from "./pages/SearchPage";
-import NotificationPage from "./pages/NotificationPage";
-import UserProfilePage from "./pages/UserProfilePage";
+
 import OtherUserProfilePage from "./pages/OtherUserProfilePage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import { UserProvider } from "./context/UserContext"; // UserContext để Lưu Thông Tin Người Dùng
+import SearchPage from "./pages/Searchpage";
+import NotificationPage from "./pages/Notificationpage";
+import UserProfilePage from "./pages/UserProfilepage";
 
 function App() {
   return (
