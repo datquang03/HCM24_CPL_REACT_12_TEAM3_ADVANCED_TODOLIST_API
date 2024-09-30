@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import UpdateUserForm from "../components/UpdateUser";
 
 const UserProfilePage = () => {
-  const { user } = useUserContext(); // Lấy thông tin người dùng từ context
+  const { user, fetchUserById } = useUserContext(); // Lấy thông tin người dùng từ context
   const [userPosts, setUserPosts] = useState<PostInterface[]>([]); // Định nghĩa kiểu cho userPosts
   const navigate = useNavigate();
 
@@ -32,6 +32,13 @@ const UserProfilePage = () => {
       }
     };
 
+    const fetchUserData = async () => {
+      if (user?.id) {
+        await fetchUserById(user.id); // Lấy thông tin người dùng mới nhất
+      }
+    };
+
+    fetchUserData();
     fetchUserPosts();
   }, [user]);
 
