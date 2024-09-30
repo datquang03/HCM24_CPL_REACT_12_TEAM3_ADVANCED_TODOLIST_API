@@ -333,11 +333,10 @@ const UserProfilePage = () => {
                           </Menu.Item>
                           <Menu.Item
                             key="delete"
-                            onClick={() => handleDelete(post.userId, post.id)}
                             style={{ color: "blue" }}
                             onClick={(e) => {
                               e.domEvent.stopPropagation(); // Ngăn sự kiện điều hướng khi click "Delete"
-                              handleDelete(post.id);
+                              handleDelete(post.userId, post.id);
                             }}
                           >
                             Delete
